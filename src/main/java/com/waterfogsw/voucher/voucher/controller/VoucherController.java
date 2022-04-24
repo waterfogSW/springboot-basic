@@ -29,7 +29,8 @@ public class VoucherController {
     }
 
     private void validateVoucherRequest(Request<VoucherDto> request) {
-        if (request.body().type() == null) throw new IllegalArgumentException();
-        if (request.body().value() == 0) throw new IllegalArgumentException();
+        if (request.body().type() == null || request.body().value() == 0) {
+            throw new IllegalArgumentException();
+        }
     }
 }
