@@ -28,6 +28,8 @@ public class VoucherController {
             return Response.ok(ResponseVoucherDto.of(savedVoucher));
         } catch (IllegalArgumentException e) {
             return Response.error(ResponseStatus.BAD_REQUEST);
+        } catch (IllegalStateException e) {
+            return Response.error(ResponseStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

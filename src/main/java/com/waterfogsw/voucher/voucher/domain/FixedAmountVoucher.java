@@ -1,5 +1,10 @@
 package com.waterfogsw.voucher.voucher.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("FIXED_AMOUNT")
 public class FixedAmountVoucher extends Voucher {
 
     private final int amount;
@@ -11,6 +16,14 @@ public class FixedAmountVoucher extends Voucher {
     public FixedAmountVoucher(Long id, int amount) {
         super(id, VoucherType.FIXED_AMOUNT);
         validate(amount);
+        this.amount = amount;
+    }
+
+    @JsonCreator
+    public FixedAmountVoucher(@JsonProperty("id") Long id,
+                              @JsonProperty("type") VoucherType type,
+                              @JsonProperty("value") int amount) {
+        super(id, type);
         this.amount = amount;
     }
 

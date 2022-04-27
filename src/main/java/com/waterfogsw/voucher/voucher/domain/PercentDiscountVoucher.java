@@ -1,5 +1,10 @@
 package com.waterfogsw.voucher.voucher.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("PERCENT_DISCOUNT")
 public class PercentDiscountVoucher extends Voucher {
 
     private final int percent;
@@ -11,6 +16,14 @@ public class PercentDiscountVoucher extends Voucher {
     public PercentDiscountVoucher(Long id, int percent) {
         super(id, VoucherType.PERCENT_DISCOUNT);
         validate(percent);
+        this.percent = percent;
+    }
+
+    @JsonCreator
+    public PercentDiscountVoucher(@JsonProperty("id") Long id,
+                                  @JsonProperty("type") VoucherType type,
+                                  @JsonProperty("value") int percent) {
+        super(id, type);
         this.percent = percent;
     }
 
