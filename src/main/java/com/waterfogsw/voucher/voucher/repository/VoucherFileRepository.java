@@ -5,14 +5,14 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-@Profile({"dev"})
+@Profile({"local"})
 @Repository
-public class VoucherMemoryRepository implements VoucherRepository {
+public class VoucherFileRepository implements VoucherRepository {
 
-    private static final Map<Long, Voucher> voucherStore = new ConcurrentHashMap<>();
+    public VoucherFileRepository() {
+        FileUtils.initFilePath();
+    }
 
     @Override
     public Voucher save(Voucher voucher) {
@@ -22,24 +22,21 @@ public class VoucherMemoryRepository implements VoucherRepository {
 
         if (voucher.getId() == null) {
             Voucher newVoucher = createVoucherEntity(voucher);
-            voucherStore.put(newVoucher.getId(), newVoucher);
+            FileUtils.save(newVoucher);
             return newVoucher;
         }
 
-        voucherStore.put(voucher.getId(), voucher);
+        FileUtils.save(voucher);
         return voucher;
     }
 
     @Override
     public List<Voucher> findAll() {
-        return voucherStore.values()
-                .stream()
-                .toList();
+        return FileUtils.findAll();
     }
 
     private Voucher createVoucherEntity(Voucher voucher) {
         Long id = KeyGenerator.keyGenerate();
         return Voucher.toEntity(id, voucher);
     }
-
 }
