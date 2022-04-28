@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class VoucherFileRepositoryTests {
 
-    private VoucherRepository voucherRepository = new VoucherFileRepository();
+    private VoucherRepository voucherRepository = new VoucherFileRepository("./repository/voucher");
 
     @Nested
     @DisplayName("save 메소드는")

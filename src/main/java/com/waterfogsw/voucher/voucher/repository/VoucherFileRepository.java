@@ -1,6 +1,7 @@
 package com.waterfogsw.voucher.voucher.repository;
 
 import com.waterfogsw.voucher.voucher.domain.Voucher;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -10,8 +11,11 @@ import java.util.List;
 @Repository
 public class VoucherFileRepository implements VoucherRepository {
 
-    public VoucherFileRepository() {
-        FileUtils.initFilePath();
+    private final String repositoryPath;
+
+    public VoucherFileRepository(@Value("${file-repository-path}") String path) {
+        repositoryPath = path;
+        FileUtils.initFilePath(path);
     }
 
     @Override
@@ -22,17 +26,17 @@ public class VoucherFileRepository implements VoucherRepository {
 
         if (voucher.getId() == null) {
             Voucher newVoucher = createVoucherEntity(voucher);
-            FileUtils.save(newVoucher);
+            FileUtils.save(newVoucher, repositoryPath);
             return newVoucher;
         }
 
-        FileUtils.save(voucher);
+        FileUtils.save(voucher, repositoryPath);
         return voucher;
     }
 
     @Override
     public List<Voucher> findAll() {
-        return FileUtils.findAll();
+        return FileUtils.findAll(repositoryPath);
     }
 
     private Voucher createVoucherEntity(Voucher voucher) {
