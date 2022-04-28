@@ -5,7 +5,10 @@ import com.waterfogsw.voucher.voucher.domain.PercentDiscountVoucher;
 import com.waterfogsw.voucher.voucher.domain.Voucher;
 import com.waterfogsw.voucher.voucher.repository.VoucherFileRepository;
 import com.waterfogsw.voucher.voucher.repository.VoucherRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -74,9 +77,6 @@ public class VoucherFileRepositoryTests {
 
                 final var list = voucherRepository.findAll();
                 assertThat(list.size(), is(3));
-                System.out.println(list.get(0).getValue());
-                System.out.println(list.get(1).getValue());
-                System.out.println(list.get(2).getValue());
             }
         }
     }
